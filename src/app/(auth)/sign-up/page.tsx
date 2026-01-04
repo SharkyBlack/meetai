@@ -1,9 +1,20 @@
-import { Card } from '@/components/ui/card'
-import { SingUpView } from '@/modules/auth/ui/views/sign-up-view'
-import React from 'react'
 
-const Page = () => {
-  console.log("SIGn up page")
+
+import React from "react";
+import { auth } from "@/lib/auth";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { SingUpView } from '@/modules/auth/ui/views/sign-up-view'
+
+
+const Page = async () => {
+  const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    if (!!session) {
+      redirect("/");
+    }
   return (
     <div>
         <SingUpView/>
